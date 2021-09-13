@@ -1,0 +1,10 @@
+FROM python:3.8
+WORKDIR /home
+RUN apt-get update && apt install tree
+RUN mkdir src
+RUN mkdir target
+COPY ./jsontoxml/requirements.txt .
+COPY ./jsontoxml/config.ini . 
+RUN pip install -r requirements.txt
+ADD ./jsontoxml/main.py .
+ENTRYPOINT ["python","./main.py"]

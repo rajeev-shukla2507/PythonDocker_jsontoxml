@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  jsontoxmlconvertor:
+    build: 
+      context: .
+      dockerfile: ./jsontoxml/dockerfile
+    image: imgsontoxmlconvertor
+    container_name: jsontoxmlconvertor
+    networks:
+      ftp-net:
+
+  ftp-server:
+    container_name: ftpd-server
+    image: stilliard/pure-ftpd:hardened
+    ports:
+      - "21:21"
+      - "20:20"
+      - "30000-30009:30000-30009"
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: "user1"
+      FTP_USER_PASS: "12345"
+      FTP_USER_HOME: "/home/user1"
+    restart: on-failure
+    networks:
+      ftp-net:
+
+networks:
+  ftp-net:
