@@ -34,81 +34,83 @@ Any given Json putted to container A appears in XML form on container B using me
 
 ## Solution:
 
-#### Algorithm:
 
-1. Create a python script which performs below functionalities:
-    i. Monitor the source directory for any .json file in small intervals.
+#### 1. Algorithm:
+            Create a python script which performs below functionalities:
+                >    i. Monitor the source directory for any .json file in small intervals.
 
-        if (.json file found)
-        - converts to xml
-        - append time stamp to xml and save it to target directory
-        - append timestamp to input json file and archive it
+                        if (.json file found)
+                        - converts to xml
+                        - append time stamp to xml and save it to target directory
+                        - append timestamp to input json file and archive it
 
-    ii. Monitor the target directory for any .xml file in small intervals.
+                >   ii. Monitor the target directory for any .xml file in small intervals.
 
-        if (.xml file found) 
-        - ftp it to container B(ftp server), under a folder based on current date
-        - append timestamp to the xml file and archive it
+                        if (.xml file found) 
+                        - ftp it to container B(ftp server), under a folder based on current date
+                        - append timestamp to the xml file and archive it
 
-#### Architecture Diagram:
+#### 2. Architecture:
 
-![](images/flow%20diagram.png)
-
-1. Create Docker file to build image for container A, with Entry point as the python script from step 1 above.
-
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.002.png)
-
-1. Create a Docker compose file, having 2 services. One for the python script to run in Container A and other to receive the file from container A.
-
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.003.png)	
+    ![](images/flow%20diagram.png)
 
 
+       - Create Docker file to build image for container A, with Entry point as the python script from step 1 above.
 
-**Environment** 
+        ![](images/dockerfile.png)
 
-OS: 
+        - Create a Docker compose file, having 2 services. One for the python script to run in Container A and other to receive the file from container A.
 
-`	`![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.004.png)
-
-Python:
-
-`	`![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.005.png)
-
-Docker:
-
-`	`![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.006.png)
-
-Pip package required:
-
-`	`![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.007.png)
-
-**Folder structure:**
-
-`	`![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.008.png)
-
-**Steps:** 
-
-1. Run sudo docker-compose up –d
-1. Check the containers deployed and running
-
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.009.png)
-
-1. Copy json files under ./testdata to /home/src of jsontoxmlconvertor
-
-sudo docker cp testdata/. jsontoxmlconvertor:/home/src
-
-1. Xml file created and stored under the current Date folder in ftpd-server
-
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.010.png)
-
-1. Check jsontoxml.log in jsontoxmlconvertor container
-
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.011.png)
+        ![](images/docker-compose.png)	
 
 
-1. Check the src and target archived file
 
-![](Aspose.Words.1142695d-5757-4923-b137-123f6f383184.012.png)
+#### 3. Environment** 
+
+        **OS**: 
+
+        ![](images/OS.png)
+
+        **Python**:
+
+       ![](images/python%20version.png)
+
+        **Docker**:
+
+        ![](images/docker%20version.png)
+
+        **Pip package required**:
+
+        ![](images/package.png)
+
+#### 4. Folder structure:**
+
+       ![](images/Folder%20structure.png)
+
+
+#### 5. Steps:** 
+
+    1. Run ```sudo docker-compose up –d```
+    
+    2. Check the containers deployed and running
+
+    ![](images/containers.png)
+
+    3. Copy json files under ./testdata to /home/src of jsontoxmlconvertor
+
+    ```sudo docker cp testdata/. jsontoxmlconvertor:/home/src```
+
+    4. Xml file created and stored under the current Date folder in ftpd-server
+
+    ![](images/xml%20files.png)
+
+    5. Check jsontoxml.log in jsontoxmlconvertor container
+
+    ![](images/logs.png)
+
+    6. Check the src and target archived file
+
+    ![](images/Archive.png)
 
 
 
