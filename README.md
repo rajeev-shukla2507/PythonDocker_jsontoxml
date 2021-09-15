@@ -52,7 +52,7 @@ Any given Json putted to container A appears in XML form on container B using me
 
 #### Architecture Diagram:
 
-![Flow Diagram] (\images\flow diagram.png)
+![](images/flow%20diagram.png)
 
 1. Create Docker file to build image for container A, with Entry point as the python script from step 1 above.
 
